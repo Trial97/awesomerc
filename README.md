@@ -1,0 +1,2 @@
+# awesomerc
+My awesome config
