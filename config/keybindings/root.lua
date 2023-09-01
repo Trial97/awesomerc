@@ -8,6 +8,7 @@ local keys = require("config.keys")
 
 require("awful.autofocus")
 
+-- https://man.archlinux.org/man/xev.1
 local function buttons()
   awful.mouse.append_global_mousebindings({
     awful.button({}, 1, function()
@@ -93,6 +94,9 @@ local function keybindings()
   awful.keyboard.append_global_keybindings({
     group = "launcher",
     awful.key({ modkey }, "Return", function()
+      awful.spawn(terminal)
+    end, { description = "open a terminal" }),
+    awful.key({ modkey }, "KP_Enter", function()
       awful.spawn(terminal)
     end, { description = "open a terminal" }),
     awful.key({ modkey }, "space", function()

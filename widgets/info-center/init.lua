@@ -91,8 +91,10 @@ return function(s)
       self:emit_signal("closed")
     end
   end
-  panel.backdrop:buttons({ awful.button({}, 1, nil, function()
-    awesome.emit_signal("widgets::info_center:toggle")
-  end) })
+  panel.backdrop:buttons({
+    awful.button({}, 1, nil, function()
+      awesome.emit_signal("widgets::info_center:toggle")
+    end),
+  })
   return panel
 end

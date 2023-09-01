@@ -7,5 +7,6 @@
     "tag",
     "mouse"
   ],
-  "workspace.library": ["/usr/share/awesome/lib"]
+  "workspace.library": ["/usr/share/awesome/lib"],
+  "format.enable": false
 }

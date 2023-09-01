@@ -1,0 +1,24 @@
+[*.lua]
+indent_style = space
+indent_size = 2
+continuation_indent = 2
+
+max_line_length = 120
+end_of_line = lf
+
+trailing_table_separator = smart
+
+call_arg_parentheses = keep
+detect_end_of_line = false
+insert_final_newline = true
+
+align_call_args = true
+align_function_params = true
+align_continuous_assign_statement = true
+align_continuous_rect_table_field = true
+align_continuous_line_space = 2
+align_if_branch = false
+
+align_continuous_similar_call_args = true
+
+align_continuous_inline_comment = true
