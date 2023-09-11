@@ -1,14 +1,14 @@
-local awful = require("awful")
-local wibox = require("wibox")
+local awful = require('awful')
+local wibox = require('wibox')
 
 local tasklist_buttons = {
   awful.button({}, 1, function(c)
     c:activate({
-      context = "tasklist",
-      action = "toggle_minimization",
+      context = 'tasklist',
+      action = 'toggle_minimization',
     })
   end),
-  awful.button({ "Control" }, 2, function(c)
+  awful.button({ 'Control' }, 2, function(c)
     c:kill()
   end),
   awful.button({}, 3, function()
@@ -35,11 +35,11 @@ return function(s)
         {
           forced_width = 5,
           thickness = 1,
-          color = "#777777",
+          color = '#777777',
           widget = wibox.widget.separator,
         },
-        valign = "center",
-        halign = "center",
+        valign = 'center',
+        halign = 'center',
         widget = wibox.container.place,
       },
       spacing = 1,
@@ -56,7 +56,7 @@ return function(s)
             widget = wibox.container.margin,
           },
           {
-            id = "text_role",
+            id = 'text_role',
             widget = wibox.widget.textbox,
           },
           layout = wibox.layout.fixed.horizontal,
@@ -65,7 +65,7 @@ return function(s)
         right = 10,
         widget = wibox.container.margin,
       },
-      id = "background_role",
+      id = 'background_role',
       widget = wibox.container.background,
     },
   })

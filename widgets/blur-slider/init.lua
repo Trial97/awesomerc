@@ -1,16 +1,16 @@
-local awful = require("awful")
-local icons = require("themes.icons")
-local slider = require("widgets.slider")
+local awful = require('awful')
+local icons = require('themes.icons')
+local slider = require('widgets.slider')
 
 local spawn = awful.spawn
 local start_up = true
-local blur_slider = slider("Blur Strength", icons.effects, function(level)
+local blur_slider = slider('Blur Strength', icons.effects, function(level)
   if start_up then
     return
   end
   local power = level / 50 * 10
   awful.spawn.with_shell([[bash -c "
-    sed -i 's/.*strength = .*/    strength = ]] .. tostring(power):gsub(",", ".") .. [[;/g' \
+    sed -i 's/.*strength = .*/    strength = ]] .. tostring(power):gsub(',', '.') .. [[;/g' \
     $HOME/.config/picom/picom.conf
     "]])
 end)
@@ -20,7 +20,7 @@ local function update_slider(first)
     [[bash -c "grep -F 'strength =' $HOME/.config/picom/picom.conf |
         awk 'NR==1 {print $3}' | tr -d ';'"]],
     function(stdout, stderr)
-      local strength = stdout:match("%d+")
+      local strength = stdout:match('%d+')
       local blur_strength = tonumber(strength) / 20 * 100
       blur_slider:set_value(tonumber(blur_strength))
       start_up = false
@@ -32,10 +32,10 @@ end
 update_slider(true)
 
 -- The emit will come from the global keybind
-awesome.connect_signal("widgets::blur", update_slider)
+awesome.connect_signal('widgets::blur', update_slider)
 
 -- Adjust slider value to change blur strength
-awesome.connect_signal("widgets::blur:increase", function()
+awesome.connect_signal('widgets::blur:increase', function()
   -- On startup, the slider.value returns nil so...
   if blur_slider:get_value() == nil then
     return
@@ -52,7 +52,7 @@ awesome.connect_signal("widgets::blur:increase", function()
 end)
 
 -- Decrease blur
-awesome.connect_signal("widgets::blur:decrease", function()
+awesome.connect_signal('widgets::blur:decrease', function()
   -- On startup, the slider.value returns nil so...
   if blur_slider:get_value() == nil then
     return

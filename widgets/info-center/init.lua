@@ -1,12 +1,12 @@
-local awful = require("awful")
-local wibox = require("wibox")
-local gears = require("gears")
-local beautiful = require("beautiful")
+local awful = require('awful')
+local wibox = require('wibox')
+local gears = require('gears')
+local beautiful = require('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 
 local panel_width = dpi(350)
 
-awesome.connect_signal("widgets::info_center:toggle", function(open)
+awesome.connect_signal('widgets::info_center:toggle', function(open)
   local focused = awful.screen.focused()
   for s in screen do
     if s.info_center == nil then
@@ -29,12 +29,12 @@ return function(s)
           layout = wibox.layout.fixed.vertical,
           forced_width = panel_width,
           spacing = dpi(10),
-          require("widgets.notif-center")(),
+          require('widgets.notif-center')(),
         },
         margins = dpi(16),
         widget = wibox.container.margin,
       },
-      id = "info_center",
+      id = 'info_center',
       bg = beautiful.background,
       shape = function(cr, w, h)
         gears.shape.rounded_rect(cr, w, h, beautiful.groups_radius)
@@ -42,7 +42,7 @@ return function(s)
       widget = wibox.container.background,
     },
     screen = s,
-    type = "dock",
+    type = 'dock',
     visible = false,
     ontop = true,
     width = panel_width,
@@ -68,7 +68,7 @@ return function(s)
     ontop = true,
     screen = s,
     bg = beautiful.transparent,
-    type = "utility",
+    type = 'utility',
     x = s.geometry.x,
     y = s.geometry.y,
     width = s.geometry.width,
@@ -86,14 +86,14 @@ return function(s)
     self.backdrop.visible = self.opened
     self.visible = self.opened
     if self.opened then
-      self:emit_signal("opened")
+      self:emit_signal('opened')
     else
-      self:emit_signal("closed")
+      self:emit_signal('closed')
     end
   end
   panel.backdrop:buttons({
     awful.button({}, 1, nil, function()
-      awesome.emit_signal("widgets::info_center:toggle")
+      awesome.emit_signal('widgets::info_center:toggle')
     end),
   })
   return panel

@@ -1,16 +1,16 @@
-local awful = require("awful")
-local wibox = require("wibox")
-local gears = require("gears")
-local beautiful = require("beautiful")
-local click_container = require("widgets.clickable-container")
-local notifbox_core = require("widgets.notif-center.build-notifbox")
+local awful = require('awful')
+local wibox = require('wibox')
+local gears = require('gears')
+local beautiful = require('beautiful')
+local click_container = require('widgets.clickable-container')
+local notifbox_core = require('widgets.notif-center.build-notifbox')
 
 local dpi = beautiful.xresources.apply_dpi
-local widget_icon_dir = beautiful.get().icons .. "widgets/notif-center/"
+local widget_icon_dir = beautiful.get().icons .. 'widgets/notif-center/'
 
 local clear_all_imagebox = wibox.widget({
   {
-    image = widget_icon_dir .. "clear_all.svg",
+    image = widget_icon_dir .. 'clear_all.svg',
     resize = true,
     forced_height = dpi(17),
     forced_width = dpi(17),
@@ -39,6 +39,6 @@ return wibox.widget({
     widget = wibox.container.background,
   },
   nil,
-  expand = "none",
+  expand = 'none',
   layout = wibox.layout.align.vertical,
 })

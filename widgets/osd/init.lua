@@ -1,13 +1,13 @@
-local awful = require("awful")
-local gears = require("gears")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
+local awful = require('awful')
+local gears = require('gears')
+local wibox = require('wibox')
+local beautiful = require('beautiful')
 
 local dpi = beautiful.xresources.apply_dpi
 
 local function hideOnScreen(s, name)
   for k, v in pairs(s.osds) do
-    if string.find(k, "_osd") and not (name and string.find(k, name)) then
+    if string.find(k, '_osd') and not (name and string.find(k, name)) then
       v.visible = false
     end
   end
@@ -38,15 +38,15 @@ local function rerun()
 end
 
 return function(name, text, icon, update_value)
-  name = name .. "_osd"
-  local baseName = "modules::" .. name
+  name = name .. '_osd'
+  local baseName = 'modules::' .. name
 
-  awesome.connect_signal(baseName .. ":show", function(open)
+  awesome.connect_signal(baseName .. ':show', function(open)
     local focused = awful.screen.focused()
     local widget = focused[name]
     awful.placement.bottom(widget, {
-      preferred_positions = "top",
-      preferred_anchors = "middle",
+      preferred_positions = 'top',
+      preferred_anchors = 'middle',
       geometry = focused.top_panel,
       offset = { x = 0, y = dpi(-100) },
     })
@@ -65,71 +65,71 @@ return function(name, text, icon, update_value)
 
   local osd_header = wibox.widget({
     text = text,
-    font = "Inter Bold 12",
-    align = "left",
-    valign = "center",
+    font = 'Inter Bold 12',
+    align = 'left',
+    valign = 'center',
     widget = wibox.widget.textbox,
   })
 
   local osd_value = wibox.widget({
-    text = "0%",
-    font = "Inter Bold 12",
-    align = "center",
-    valign = "center",
+    text = '0%',
+    font = 'Inter Bold 12',
+    align = 'center',
+    valign = 'center',
     widget = wibox.widget.textbox,
   })
 
   local slider_osd = wibox.widget({
     nil,
     {
-      id = "osd_slider",
+      id = 'osd_slider',
       bar_shape = gears.shape.rounded_rect,
       bar_height = dpi(24),
-      bar_color = "#ffffff20",
-      bar_active_color = "#f2f2f2EE",
-      handle_color = "#ffffff",
+      bar_color = '#ffffff20',
+      bar_active_color = '#f2f2f2EE',
+      handle_color = '#ffffff',
       handle_shape = gears.shape.circle,
       handle_width = dpi(24),
-      handle_border_color = "#00000012",
+      handle_border_color = '#00000012',
       handle_border_width = dpi(1),
       maximum = 100,
       widget = wibox.widget.slider,
     },
     nil,
-    expand = "none",
+    expand = 'none',
     layout = wibox.layout.align.vertical,
   })
 
   local osd_slider = slider_osd.osd_slider
   local pressed = false
 
-  osd_slider:connect_signal("property::value", function()
+  osd_slider:connect_signal('property::value', function()
     local level = osd_slider:get_value()
     -- Update textbox widget text
-    osd_value.text = level .. "%"
+    osd_value.text = level .. '%'
     local focused = awful.screen.focused()
     -- if focused[name].visible then
-    awesome.emit_signal(baseName .. ":show", true)
+    awesome.emit_signal(baseName .. ':show', true)
     -- end
     -- if pressed then
     update_value(level, pressed)
     -- end
   end)
 
-  osd_slider:connect_signal("button::press", function()
+  osd_slider:connect_signal('button::press', function()
     pressed = true
   end)
 
-  osd_slider:connect_signal("mouse::enter", function() end)
-  osd_slider:connect_signal("mouse::leave", function()
+  osd_slider:connect_signal('mouse::enter', function() end)
+  osd_slider:connect_signal('mouse::leave', function()
     pressed = false
   end)
-  osd_slider:connect_signal("button::release", function()
+  osd_slider:connect_signal('button::release', function()
     pressed = false
   end)
 
   local icon = wibox.widget({
-    { id = "cover", image = icon, resize = true, widget = wibox.widget.imagebox },
+    { id = 'cover', image = icon, resize = true, widget = wibox.widget.imagebox },
     forced_height = dpi(150),
     top = dpi(12),
     bottom = dpi(12),
@@ -142,10 +142,10 @@ return function(name, text, icon, update_value)
     pressed = false
     osd_slider:set_value(volume)
     if app_icon then
-      icon.cover:set_image(beautiful.get().icons .. app_icon .. ".svg")
-      icon:emit_signal("widget::redraw_needed")
+      icon.cover:set_image(beautiful.get().icons .. app_icon .. '.svg')
+      icon:emit_signal('widget::redraw_needed')
       if app_icon ~= prev_image then
-        awesome.emit_signal(baseName .. ":show", true)
+        awesome.emit_signal(baseName .. ':show', true)
       end
       prev_image = app_icon
     end
@@ -163,7 +163,7 @@ return function(name, text, icon, update_value)
       },
       ontop = true,
       visible = false,
-      type = "notification",
+      type = 'notification',
       screen = s,
       height = osd_height,
       width = osd_width,
@@ -172,8 +172,8 @@ return function(name, text, icon, update_value)
       offset = dpi(5),
       shape = gears.shape.rectangle,
       bg = beautiful.transparent,
-      preferred_anchors = "middle",
-      preferred_positions = { "left", "right", "top", "bottom" },
+      preferred_anchors = 'middle',
+      preferred_positions = { 'left', 'right', 'top', 'bottom' },
     })
     local osds = s.osds or {}
     osds[name] = volume_osd
@@ -187,7 +187,7 @@ return function(name, text, icon, update_value)
           {
             {
               layout = wibox.layout.align.horizontal,
-              expand = "none",
+              expand = 'none',
               nil,
               icon,
               nil,
@@ -197,7 +197,7 @@ return function(name, text, icon, update_value)
               spacing = dpi(5),
               {
                 layout = wibox.layout.align.horizontal,
-                expand = "none",
+                expand = 'none',
                 osd_header,
                 nil,
                 osd_value,
@@ -218,7 +218,7 @@ return function(name, text, icon, update_value)
     })
 
     -- Reset timer on mouse hover
-    volume_osd:connect_signal("mouse::enter", function()
+    volume_osd:connect_signal('mouse::enter', function()
       rerun()
     end)
   end

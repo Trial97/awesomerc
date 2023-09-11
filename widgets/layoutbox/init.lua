@@ -1,7 +1,7 @@
-local wibox = require("wibox")
-local awful = require("awful")
-local beautiful = require("beautiful")
-local click_container = require("widgets.clickable-container")
+local wibox = require('wibox')
+local awful = require('awful')
+local beautiful = require('beautiful')
+local click_container = require('widgets.clickable-container')
 
 local dpi = beautiful.xresources.apply_dpi
 

@@ -1,28 +1,28 @@
-local wibox = require("wibox")
-local awful = require("awful")
-local gears = require("gears")
-local beautiful = require("beautiful")
-local utils = require("utils")
+local wibox = require('wibox')
+local awful = require('awful')
+local gears = require('gears')
+local beautiful = require('beautiful')
+local utils = require('utils')
 
 local dpi = beautiful.xresources.apply_dpi
 
-local builder = require("widgets.notif-center.build-notifbox.notifbox-ui-elements")
-local notifbox_core = require("widgets.notif-center.build-notifbox")
+local builder = require('widgets.notif-center.build-notifbox.notifbox-ui-elements')
+local notifbox_core = require('widgets.notif-center.build-notifbox')
 
 local notifbox_layout = notifbox_core.notifbox_layout
 local reset_notifbox_layout = notifbox_core.reset_notifbox_layout
 
 return function(notif, icon, title, message, app, bgcolor)
   local time_of_pop = utils.current_time()
-  local exact_time = utils.current_time("%I:%M %p")
-  local exact_date_time = utils.current_time("%b %d, %I:%M %p")
+  local exact_time = utils.current_time('%I:%M %p')
+  local exact_date_time = utils.current_time('%b %d, %I:%M %p')
 
   local notifbox_timepop = wibox.widget({
-    id = "time_pop",
+    id = 'time_pop',
     markup = nil,
-    font = "Inter Regular 10",
-    align = "left",
-    valign = "center",
+    font = 'Inter Regular 10',
+    align = 'left',
+    valign = 'center',
     visible = true,
     widget = wibox.widget.textbox,
   })
@@ -38,29 +38,29 @@ return function(notif, icon, title, message, app, bgcolor)
       time_difference = tonumber(time_difference)
 
       if time_difference < 60 then
-        notifbox_timepop:set_markup("now")
+        notifbox_timepop:set_markup('now')
       elseif time_difference >= 60 and time_difference < 3600 then
         local time_in_minutes = math.floor(time_difference / 60)
-        notifbox_timepop:set_markup(time_in_minutes .. "m ago")
+        notifbox_timepop:set_markup(time_in_minutes .. 'm ago')
       elseif time_difference >= 3600 and time_difference < 86400 then
         notifbox_timepop:set_markup(exact_time)
       elseif time_difference >= 86400 then
         notifbox_timepop:set_markup(exact_date_time)
         return false
       end
-      collectgarbage("collect")
+      collectgarbage('collect')
     end,
   })
 
   local notifbox_template = wibox.widget({
-    id = "notifbox_template",
-    expand = "none",
+    id = 'notifbox_template',
+    expand = 'none',
     {
       {
         layout = wibox.layout.fixed.vertical,
         spacing = dpi(5),
         {
-          expand = "none",
+          expand = 'none',
           layout = wibox.layout.align.horizontal,
           {
             layout = wibox.layout.fixed.horizontal,
@@ -113,24 +113,24 @@ return function(notif, icon, title, message, app, bgcolor)
       else
         notifbox_layout:remove_widgets(notifbox, true)
       end
-      collectgarbage("collect")
+      collectgarbage('collect')
     end),
   })
 
   -- Add hover, and mouse leave events
-  notifbox_template:connect_signal("mouse::enter", function()
+  notifbox_template:connect_signal('mouse::enter', function()
     notifbox.bg = beautiful.groups_bg
     notifbox_timepop.visible = false
     notifbox_dismiss.visible = true
   end)
 
-  notifbox_template:connect_signal("mouse::leave", function()
+  notifbox_template:connect_signal('mouse::leave', function()
     notifbox.bg = beautiful.tranparent
     notifbox_timepop.visible = true
     notifbox_dismiss.visible = false
   end)
 
-  collectgarbage("collect")
+  collectgarbage('collect')
 
   return notifbox
 end

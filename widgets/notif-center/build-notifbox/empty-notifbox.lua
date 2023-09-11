@@ -1,21 +1,21 @@
 -- This returns the "Wow, such empty." message.
 
-local wibox = require("wibox")
-local beautiful = require("beautiful")
+local wibox = require('wibox')
+local beautiful = require('beautiful')
 
 local dpi = beautiful.xresources.apply_dpi
-local widget_icon_dir = beautiful.get().icons .. "widgets/notif-center/"
+local widget_icon_dir = beautiful.get().icons .. 'widgets/notif-center/'
 
 local empty_notifbox = wibox.widget({
   {
     layout = wibox.layout.fixed.vertical,
     spacing = dpi(5),
     {
-      expand = "none",
+      expand = 'none',
       layout = wibox.layout.align.horizontal,
       nil,
       {
-        image = widget_icon_dir .. "empty-notification.svg",
+        image = widget_icon_dir .. 'empty-notification.svg',
         resize = true,
         forced_height = dpi(35),
         forced_width = dpi(35),
@@ -24,17 +24,17 @@ local empty_notifbox = wibox.widget({
       nil,
     },
     {
-      text = "Wow, such empty.",
-      font = "Inter Bold 14",
-      align = "center",
-      valign = "center",
+      text = 'Wow, such empty.',
+      font = 'Inter Bold 14',
+      align = 'center',
+      valign = 'center',
       widget = wibox.widget.textbox,
     },
     {
-      text = "Come back later.",
-      font = "Inter Regular 10",
-      align = "center",
-      valign = "center",
+      text = 'Come back later.',
+      font = 'Inter Regular 10',
+      align = 'center',
+      valign = 'center',
       widget = wibox.widget.textbox,
     },
   },
@@ -43,7 +43,7 @@ local empty_notifbox = wibox.widget({
 })
 
 local separator_for_empty_msg = wibox.widget({
-  orientation = "vertical",
+  orientation = 'vertical',
   opacity = 0.0,
   widget = wibox.widget.separator,
 })
@@ -52,7 +52,7 @@ local separator_for_empty_msg = wibox.widget({
 return wibox.widget({
   layout = wibox.layout.align.vertical,
   forced_height = dpi(150),
-  expand = "none",
+  expand = 'none',
   separator_for_empty_msg,
   empty_notifbox,
   separator_for_empty_msg,

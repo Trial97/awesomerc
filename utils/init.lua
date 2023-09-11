@@ -1,4 +1,4 @@
-local awful = require("awful")
+local awful = require('awful')
 
 local utils = {}
 
@@ -16,7 +16,7 @@ function utils.log(level, message, ...)
 end
 
 function utils.float_tostring(no)
-  return tostring(no):gsub(",", ".")
+  return tostring(no):gsub(',', '.')
 end
 
 function utils.update_user_name(update)
@@ -31,7 +31,7 @@ function utils.update_user_name(update)
         fi
         ]],
     function(stdout)
-      update(stdout:gsub("%\n", ""))
+      update(stdout:gsub('%\n', ''))
     end
   )
 end
@@ -40,18 +40,18 @@ function utils.get_date_ordinal(date)
   local ordinal = nil
   local first_digit = string.sub(date, 0, 1)
   local last_digit = string.sub(date, -1)
-  if first_digit == "0" then
+  if first_digit == '0' then
     date = last_digit
   end
 
-  if last_digit == "1" and date ~= "11" then
-    ordinal = "st"
-  elseif last_digit == "2" and date ~= "12" then
-    ordinal = "nd"
-  elseif last_digit == "3" and date ~= "13" then
-    ordinal = "rd"
+  if last_digit == '1' and date ~= '11' then
+    ordinal = 'st'
+  elseif last_digit == '2' and date ~= '12' then
+    ordinal = 'nd'
+  elseif last_digit == '3' and date ~= '13' then
+    ordinal = 'rd'
   else
-    ordinal = "th"
+    ordinal = 'th'
   end
 
   return date .. ordinal
@@ -59,7 +59,7 @@ end
 
 -- Get current time
 function utils.current_time(format)
-  return os.date(format or "%H:%M:%S")
+  return os.date(format or '%H:%M:%S')
 end
 
 -- Parse HH:MM:SS to seconds
@@ -97,7 +97,7 @@ function utils.indexOf(array, value)
 end
 
 function utils.clientIsVisible(c)
-  if c.instance == "QuakeDD" then
+  if c.instance == 'QuakeDD' then
     return false
   end
   if c.sticky and not c.hidden then
@@ -139,7 +139,7 @@ function utils.raiseVisibleClientsByIdx(idx)
   if focusedIdx == 0 then
     focusedIdx = len
   end
-  clients[focusedIdx]:emit_signal("request::activate", "client.focus.byidx", { raise = true })
+  clients[focusedIdx]:emit_signal('request::activate', 'client.focus.byidx', { raise = true })
 end
 
 return utils

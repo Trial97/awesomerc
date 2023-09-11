@@ -1,8 +1,8 @@
-local awful = require("awful")
-local ruled = require("ruled")
-local beautiful = require("beautiful")
-local lain = require("extra.lain")
-local apps = require("utils.constats")
+local awful = require('awful')
+local ruled = require('ruled')
+local beautiful = require('beautiful')
+local lain = require('extra.lain')
+local apps = require('utils.constats')
 
 local quake_properties = function()
   return {
@@ -25,17 +25,17 @@ local quake_properties = function()
   }
 end
 
-ruled.client.connect_signal("request::rules", function()
+ruled.client.connect_signal('request::rules', function()
   ruled.client.append_rule({
-    id = "quake_terminal",
-    rule_any = { instance = { "QuakeDD" } },
+    id = 'quake_terminal',
+    rule_any = { instance = { 'QuakeDD' } },
     properties = quake_properties(),
   })
 end)
 
 return lain.util.quake({
   app = apps.terminal,
-  argname = "--name %s",
+  argname = '--name %s',
   followtag = true,
   settings = function(c)
     ruled.client.execute(c, quake_properties())

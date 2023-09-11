@@ -1,29 +1,29 @@
-local wibox = require("wibox")
-local gears = require("gears")
-local beautiful = require("beautiful")
+local wibox = require('wibox')
+local gears = require('gears')
+local beautiful = require('beautiful')
 local dpi = beautiful.xresources.apply_dpi
 
 local notif_header = wibox.widget({
-  text = "Notification Center",
-  font = "Inter Bold 14",
-  align = "left",
-  valign = "center",
+  text = 'Notification Center',
+  font = 'Inter Bold 14',
+  align = 'left',
+  valign = 'center',
   widget = wibox.widget.textbox,
 })
 
 return function()
-  local clear_all = require("widgets.notif-center.clear-all")
-  local notifbox_layout = require("widgets.notif-center.build-notifbox").notifbox_layout
+  local clear_all = require('widgets.notif-center.clear-all')
+  local notifbox_layout = require('widgets.notif-center.build-notifbox').notifbox_layout
 
   return wibox.widget({
     {
       {
-        expand = "none",
+        expand = 'none',
         layout = wibox.layout.fixed.vertical,
         spacing = dpi(10),
         {
           layout = wibox.layout.align.horizontal,
-          expand = "none",
+          expand = 'none',
           notif_header,
           nil,
           clear_all,

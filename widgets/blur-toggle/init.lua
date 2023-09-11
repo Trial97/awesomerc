@@ -1,13 +1,13 @@
-local awful = require("awful")
-local beautiful = require("beautiful")
-local icons = require("themes.icons")
-local toggle = require("widgets.toggle")
+local awful = require('awful')
+local beautiful = require('beautiful')
+local icons = require('themes.icons')
+local toggle = require('widgets.toggle')
 
-local widget_icon_dir = beautiful.get().icons .. "widgets/blur/"
-local config = "$HOME/.config/picom/picom.conf"
+local widget_icon_dir = beautiful.get().icons .. 'widgets/blur/'
+local config = '$HOME/.config/picom/picom.conf'
 
 local state = false
-local offIcon = widget_icon_dir .. "effects-off.svg"
+local offIcon = widget_icon_dir .. 'effects-off.svg'
 local onIcon = icons.effects
 
 local function toggle_blur()
@@ -24,19 +24,19 @@ local function toggle_blur()
   awful.spawn.with_shell(script)
 end
 
-local widget = toggle("Blur Effects", offIcon, function()
-  awesome.emit_signal("widgets::blur", false)
+local widget = toggle('Blur Effects', offIcon, function()
+  awesome.emit_signal('widgets::blur', false)
 end)
 
 local function update_widget()
   if state then
-    widget:updateButton("On", beautiful.system_magenta_dark, onIcon)
+    widget:updateButton('On', beautiful.system_magenta_dark, onIcon)
   else
-    widget:updateButton("Off", beautiful.groups_bg, offIcon)
+    widget:updateButton('Off', beautiful.groups_bg, offIcon)
   end
 end
 
-awesome.connect_signal("widgets::blur", function()
+awesome.connect_signal('widgets::blur', function()
   state = not state
   toggle_blur()
   update_widget()
@@ -44,7 +44,7 @@ end)
 
 awful.spawn.easy_async_with_shell([[bash -c "
     grep -F 'method = \"none\";' ]] .. config .. [[ | tr -d '[\"\;\=\ ]'"]], function(stdout, stderr)
-  state = not stdout:match("methodnone")
+  state = not stdout:match('methodnone')
   update_widget()
 end)
 return widget

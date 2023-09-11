@@ -1,22 +1,22 @@
-local awful = require("awful")
-local wibox = require("wibox")
-local gears = require("gears")
-local beautiful = require("beautiful")
-local click_container = require("widgets.clickable-container")
+local awful = require('awful')
+local wibox = require('wibox')
+local gears = require('gears')
+local beautiful = require('beautiful')
+local click_container = require('widgets.clickable-container')
 
 local dpi = beautiful.xresources.apply_dpi
 
 return function(text, icon, toggleAction)
   local action_name = wibox.widget({
     text = text,
-    font = "Inter Bold 10",
-    align = "left",
+    font = 'Inter Bold 10',
+    align = 'left',
     widget = wibox.widget.textbox,
   })
   local action_status = wibox.widget({
-    text = "Off",
-    font = "Inter Regular 10",
-    align = "left",
+    text = 'Off',
+    font = 'Inter Regular 10',
+    align = 'left',
     widget = wibox.widget.textbox,
   })
   local action_info = wibox.widget({
@@ -26,7 +26,7 @@ return function(text, icon, toggleAction)
   })
   local button_widget = wibox.widget({
     {
-      id = "icon",
+      id = 'icon',
       image = icon,
       widget = wibox.widget.imagebox,
       resize = true,
@@ -58,7 +58,7 @@ return function(text, icon, toggleAction)
     widget_button,
     {
       layout = wibox.layout.align.vertical,
-      expand = "none",
+      expand = 'none',
       nil,
       action_info,
       nil,

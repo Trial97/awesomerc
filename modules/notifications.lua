@@ -1,21 +1,21 @@
-local gears = require("gears")
-local wibox = require("wibox")
-local awful = require("awful")
-local ruled = require("ruled")
-local naughty = require("naughty")
-local menubar = require("menubar")
-local beautiful = require("beautiful")
-local click_container = require("widgets.clickable-container")
+local gears = require('gears')
+local wibox = require('wibox')
+local awful = require('awful')
+local ruled = require('ruled')
+local naughty = require('naughty')
+local menubar = require('menubar')
+local beautiful = require('beautiful')
+local click_container = require('widgets.clickable-container')
 local dpi = beautiful.xresources.apply_dpi
 
 -- Defaults
 naughty.config.defaults.ontop = true
 naughty.config.defaults.icon_size = dpi(32)
 naughty.config.defaults.timeout = 5
-naughty.config.defaults.title = "System Notification"
+naughty.config.defaults.title = 'System Notification'
 naughty.config.defaults.margin = dpi(16)
 naughty.config.defaults.border_width = 0
-naughty.config.defaults.position = "top_left"
+naughty.config.defaults.position = 'top_left'
 naughty.config.defaults.shape = function(cr, w, h)
   gears.shape.rounded_rect(cr, w, h, dpi(6))
 end
@@ -24,84 +24,84 @@ end
 naughty.config.padding = dpi(8)
 naughty.config.spacing = dpi(8)
 naughty.config.icon_dirs = {
-  "/usr/share/icons/Tela",
-  "/usr/share/icons/Tela-blue-dark",
-  "/usr/share/icons/Papirus/",
-  "/usr/share/icons/la-capitaine-icon-theme/",
-  "/usr/share/icons/gnome/",
-  "/usr/share/icons/hicolor/",
-  "/usr/share/pixmaps/",
+  '/usr/share/icons/Tela',
+  '/usr/share/icons/Tela-blue-dark',
+  '/usr/share/icons/Papirus/',
+  '/usr/share/icons/la-capitaine-icon-theme/',
+  '/usr/share/icons/gnome/',
+  '/usr/share/icons/hicolor/',
+  '/usr/share/pixmaps/',
 }
-naughty.config.icon_formats = { "svg", "png", "jpg", "gif" }
+naughty.config.icon_formats = { 'svg', 'png', 'jpg', 'gif' }
 
 naughty.config.notify_callback = function(args)
-  if args.app_name == "pa-applet" then
+  if args.app_name == 'pa-applet' then
     local volume = args.freedesktop_hints.value
-    if string.find(args.app_icon, "muted") then
+    if string.find(args.app_icon, 'muted') then
       volume = 0
     end
-    awesome.emit_signal("modules::volume_osd", volume, args.app_icon)
+    awesome.emit_signal('modules::volume_osd', volume, args.app_icon)
   end
   return args
 end
 
 -- Presets / rules
 
-ruled.notification.connect_signal("request::rules", function()
+ruled.notification.connect_signal('request::rules', function()
   -- Critical notifs
   ruled.notification.append_rule({
-    rule = { urgency = "critical" },
+    rule = { urgency = 'critical' },
     properties = {
-      font = "Inter Bold 10",
-      bg = "#ff0000",
-      fg = "#ffffff",
+      font = 'Inter Bold 10',
+      bg = '#ff0000',
+      fg = '#ffffff',
       margin = dpi(16),
-      position = "top_left",
+      position = 'top_left',
       implicit_timeout = 0,
     },
   })
 
   -- Normal notifs
   ruled.notification.append_rule({
-    rule = { urgency = "normal" },
+    rule = { urgency = 'normal' },
     properties = {
-      font = "Inter Regular 10",
+      font = 'Inter Regular 10',
       bg = beautiful.transparent,
       fg = beautiful.fg_normal,
       margin = dpi(16),
-      position = "top_left",
+      position = 'top_left',
       implicit_timeout = 5,
     },
   })
 
   -- Low notifs
   ruled.notification.append_rule({
-    rule = { urgency = "low" },
+    rule = { urgency = 'low' },
     properties = {
-      font = "Inter Regular 10",
+      font = 'Inter Regular 10',
       bg = beautiful.transparent,
       fg = beautiful.fg_normal,
       margin = dpi(16),
-      position = "top_left",
+      position = 'top_left',
       implicit_timeout = 5,
     },
   })
 end)
 
 -- Error handling
-naughty.connect_signal("request::display_error", function(message, startup)
+naughty.connect_signal('request::display_error', function(message, startup)
   naughty.notification({
-    urgency = "critical",
-    title = "Oops, an error happened" .. (startup and " during startup!" or "!"),
+    urgency = 'critical',
+    title = 'Oops, an error happened' .. (startup and ' during startup!' or '!'),
     message = message,
-    app_name = "System Notification",
+    app_name = 'System Notification',
     icon = beautiful.awesome_icon,
   })
 end)
 
 -- XDG icon lookup
-naughty.connect_signal("request::icon", function(n, context, hints)
-  if context ~= "app_icon" then
+naughty.connect_signal('request::icon', function(n, context, hints)
+  if context ~= 'app_icon' then
     return
   end
 
@@ -113,9 +113,9 @@ naughty.connect_signal("request::icon", function(n, context, hints)
 end)
 
 -- Connect to naughty on display signal
-naughty.connect_signal("request::display", function(n)
-  if n.app_name == "pa-applet" then
-    n:destroy("Not needed")
+naughty.connect_signal('request::display', function(n)
+  if n.app_name == 'pa-applet' then
+    n:destroy('Not needed')
     return
   end
   -- Actions Blueprint
@@ -130,8 +130,8 @@ naughty.connect_signal("request::display", function(n)
         {
           {
             {
-              id = "text_role",
-              font = "Inter Regular 10",
+              id = 'text_role',
+              font = 'Inter Regular 10',
               widget = wibox.widget.textbox,
             },
             widget = wibox.container.place,
@@ -153,7 +153,7 @@ naughty.connect_signal("request::display", function(n)
   -- Notifbox Blueprint
   naughty.layout.box({
     notification = n,
-    type = "notification",
+    type = 'notification',
     screen = awful.screen.preferred(),
     shape = gears.shape.rectangle,
     widget_template = {
@@ -167,10 +167,10 @@ naughty.connect_signal("request::display", function(n)
                     {
                       {
                         {
-                          markup = n.app_name or "System Notification",
-                          font = "Inter Bold 10",
-                          align = "center",
-                          valign = "center",
+                          markup = n.app_name or 'System Notification',
+                          font = 'Inter Bold 10',
+                          align = 'center',
+                          valign = 'center',
                           widget = wibox.widget.textbox,
                         },
                         margins = beautiful.notification_margin,
@@ -182,7 +182,7 @@ naughty.connect_signal("request::display", function(n)
                     {
                       {
                         {
-                          resize_strategy = "center",
+                          resize_strategy = 'center',
                           widget = naughty.widget.icon,
                         },
                         margins = beautiful.notification_margin,
@@ -191,15 +191,15 @@ naughty.connect_signal("request::display", function(n)
                       {
                         {
                           layout = wibox.layout.align.vertical,
-                          expand = "none",
+                          expand = 'none',
                           nil,
                           {
                             {
-                              align = "left",
+                              align = 'left',
                               widget = naughty.widget.title,
                             },
                             {
-                              align = "left",
+                              align = 'left',
                               widget = naughty.widget.message,
                             },
                             layout = wibox.layout.fixed.vertical,
@@ -229,14 +229,14 @@ naughty.connect_signal("request::display", function(n)
               layout = wibox.layout.fixed.vertical,
             },
             bg = beautiful.transparent,
-            id = "background_role",
+            id = 'background_role',
             widget = naughty.container.background,
           },
-          strategy = "min",
+          strategy = 'min',
           width = dpi(250),
           widget = wibox.container.constraint,
         },
-        strategy = "max",
+        strategy = 'max',
         height = dpi(250),
         width = dpi(250),
         widget = wibox.container.constraint,
@@ -254,6 +254,6 @@ naughty.connect_signal("request::display", function(n)
     naughty.destroy_all_notifications(nil, 1)
   end
   if not _G.dont_disturb_state then
-    awful.spawn.with_shell("canberra-gtk-play -i message")
+    awful.spawn.with_shell('canberra-gtk-play -i message')
   end
 end)

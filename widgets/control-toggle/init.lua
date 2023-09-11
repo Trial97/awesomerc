@@ -1,17 +1,17 @@
-local awful = require("awful")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
-local click_container = require("widgets.clickable-container")
+local awful = require('awful')
+local wibox = require('wibox')
+local beautiful = require('beautiful')
+local click_container = require('widgets.clickable-container')
 
 local dpi = beautiful.xresources.apply_dpi
 
-local widget_icon_dir = beautiful.get().icons .. "widgets/control-center-toggle/"
+local widget_icon_dir = beautiful.get().icons .. 'widgets/control-center-toggle/'
 
 return function(s)
   local widget = wibox.widget({
     {
-      id = "icon",
-      image = widget_icon_dir .. "control-center.svg",
+      id = 'icon',
+      image = widget_icon_dir .. 'control-center.svg',
       widget = wibox.widget.imagebox,
       resize = true,
     },
@@ -29,10 +29,10 @@ return function(s)
 
   widget_button:buttons({
     awful.button({}, 1, nil, function()
-      awesome.emit_signal("widgets::control_center:toggle")
+      awesome.emit_signal('widgets::control_center:toggle')
     end),
     awful.button({}, 3, nil, function()
-      awesome.emit_signal("widgets::info_center:toggle")
+      awesome.emit_signal('widgets::info_center:toggle')
     end),
   })
 

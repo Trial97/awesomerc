@@ -14,10 +14,10 @@
 
 -- Limitations:
 -- Timeout paused when laptop/pc is suspended or in sleep mode, and there's probably some bugs too so whatever
-local awful = require("awful")
-local gears = require("gears")
-local beautiful = require("beautiful")
-local wibox = require("wibox")
+local awful = require('awful')
+local gears = require('gears')
+local beautiful = require('beautiful')
+local wibox = require('wibox')
 local gfs = gears.filesystem
 
 --  ========================================
@@ -28,18 +28,18 @@ local gfs = gears.filesystem
 local wall_config = {
   -- Wallpaper directory. The default is:
   -- local wall_config.wall_dir = os.getenv('HOME') .. 'Pictures/Wallpapers/'
-  wall_dir = gfs.get_configuration_dir() .. "../wallpaper/",
+  wall_dir = gfs.get_configuration_dir() .. '../wallpaper/',
 
   -- If there's a picture format that awesome accepts and i missed
   -- (which i probably did) feel free to add it right here
-  valid_picture_formats = { "jpg", "png", "jpeg" },
+  valid_picture_formats = { 'jpg', 'png', 'jpeg' },
 
   -- Table mapping schedule to wallpaper filename
   wallpaper_schedule = {
-    ["00:00:00"] = "midnight-wallpaper.jpg",
-    ["06:22:00"] = "morning-wallpaper.jpg",
-    ["12:00:00"] = "noon-wallpaper.jpg",
-    ["17:58:00"] = "night-wallpaper.jpg",
+    ['00:00:00'] = 'midnight-wallpaper.jpg',
+    ['06:22:00'] = 'morning-wallpaper.jpg',
+    ['12:00:00'] = 'noon-wallpaper.jpg',
+    ['17:58:00'] = 'night-wallpaper.jpg',
   },
 }
 
@@ -50,7 +50,7 @@ local wall_config = {
 
 -- Get current time
 local current_time = function()
-  return os.date("%H:%M:%S")
+  return os.date('%H:%M:%S')
 end
 
 -- Countdown variable
@@ -64,7 +64,7 @@ local function parse_to_time(seconds)
 
   local function format(str)
     while #str < 2 do
-      str = "0" .. str
+      str = '0' .. str
     end
 
     return str
@@ -82,7 +82,7 @@ local function parse_to_time(seconds)
 
   local seconds = convert(math.floor(seconds))
 
-  return (hours .. ":" .. minutes .. ":" .. seconds)
+  return (hours .. ':' .. minutes .. ':' .. seconds)
 end
 
 -- Parse HH:MM:SS to seconds
@@ -112,7 +112,7 @@ end
 -- Returns a table containing all file paths in a directory
 local function get_dir_contents(dir)
   -- Command to give list of files in directory
-  local dir_explore = "find " .. dir .. ' -printf "%f\\n"'
+  local dir_explore = 'find ' .. dir .. ' -printf "%f\\n"'
   local lines = io.popen(dir_explore):lines() --Done synchronously because we literally can't continue without files
   local files = {}
   for line in lines do
@@ -126,7 +126,7 @@ local function filter_files_by_format(files, valid_file_formats)
   local valid_files = {}
   for _, file in ipairs(files) do
     for _, format in ipairs(valid_file_formats) do
-      if string.match(file, ".+%." .. format) ~= nil then
+      if string.match(file, '.+%.' .. format) ~= nil then
         table.insert(valid_files, file)
         break --No need to check other formats
       end
@@ -143,7 +143,7 @@ local function find_files_containing_keywords(files, keywords)
   for _, word in ipairs(keywords) do --Preserves keyword order inherently, conveniently
     for _, file in ipairs(files) do
       -- Check if file is word, contains word at beginning or contains word between 2 non-alphanumeric characters
-      if file == word or string.find(file, "^" .. word .. "[^%a]") or string.find(file, "[^%a]" .. word .. "[^%a]") then
+      if file == word or string.find(file, '^' .. word .. '[^%a]') or string.find(file, '[^%a]' .. word .. '[^%a]') then
         found_files[word] = file
         break --Only return 1 file per word
       end
@@ -157,7 +157,7 @@ end
 local function auto_schedule(wall_list)
   local sched = {}
   for index, file in ipairs(wall_list) do
-    local auto_time = parse_to_time(parse_to_seconds("24:00:00") * (index - 1) / #wall_list)
+    local auto_time = parse_to_time(parse_to_seconds('24:00:00') * (index - 1) / #wall_list)
     sched[auto_time] = file
   end
 
@@ -255,8 +255,8 @@ local function set_wallpaper(s)
       -- tiled  = false,
 
       -- widget = wibox.container.tile,
-      horizontal_fit_policy = "fit",
-      vertical_fit_policy = "fit",
+      horizontal_fit_policy = 'fit',
+      vertical_fit_policy = 'fit',
       image = beautiful.wallpaper,
       widget = wibox.widget.imagebox,
     },
@@ -281,16 +281,16 @@ local manage_timer = function()
   -- Get current time
   local time_now = parse_to_seconds(current_time())
 
-  local previous_time = "" --Scheduled time that should activate now
-  local next_time = "" --Time that should activate next
+  local previous_time = '' --Scheduled time that should activate now
+  local next_time = '' --Time that should activate next
 
-  local first_time = "24:00:00" --First scheduled time registered (to be found)
-  local last_time = "00:00:00" --Last scheduled time registered (to be found)
+  local first_time = '24:00:00' --First scheduled time registered (to be found)
+  local last_time = '00:00:00' --Last scheduled time registered (to be found)
 
   -- Find previous_time
   for time, wallpaper in pairs(wall_config.wallpaper_schedule) do
     local parsed_time = parse_to_seconds(time)
-    if previous_time == "" or parsed_time > parse_to_seconds(previous_time) then
+    if previous_time == '' or parsed_time > parse_to_seconds(previous_time) then
       if parsed_time <= time_now then
         previous_time = time
       end
@@ -303,14 +303,14 @@ local manage_timer = function()
 
   -- Previous time being blank = no scheduled time today. Therefore
   -- the last time was yesterday's latest time
-  if previous_time == "" then
+  if previous_time == '' then
     previous_time = last_time
   end
 
   --Find next_time
   for time, wallpaper in pairs(wall_config.wallpaper_schedule) do
     local parsed_time = parse_to_seconds(time)
-    if next_time == "" or parsed_time < parse_to_seconds(next_time) then
+    if next_time == '' or parsed_time < parse_to_seconds(next_time) then
       if parsed_time > time_now then
         next_time = time
       end
@@ -323,7 +323,7 @@ local manage_timer = function()
 
   -- Next time being blank means that there is no scheduled times left for
   -- the current day. So next scheduled time is tomorrow's first time
-  if next_time == "" then
+  if next_time == '' then
     next_time = first_time
   end
 
@@ -344,12 +344,12 @@ local wall_updater = gears.timer({
   call_now = true,
   callback = function()
     -- Emit signal to update wallpaper
-    awesome.emit_signal("modules::change_wallpaper")
+    awesome.emit_signal('modules::change_wallpaper')
   end,
 })
 
 -- Update wallpaper here and update the timeout for the next schedule
-awesome.connect_signal("modules::change_wallpaper", function()
+awesome.connect_signal('modules::change_wallpaper', function()
   -- Update values for the next specified schedule
   manage_timer()
 
@@ -360,7 +360,7 @@ awesome.connect_signal("modules::change_wallpaper", function()
   wall_updater:again()
 end)
 
-screen.connect_signal("request::wallpaper", function(s)
+screen.connect_signal('request::wallpaper', function(s)
   -- If wallpaper is a function, call it with the screen
   if beautiful.wallpaper then
     set_wallpaper(s)

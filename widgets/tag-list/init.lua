@@ -1,5 +1,5 @@
-local awful = require("awful")
-local sharedtags = require("extra.sharedtags")
+local awful = require('awful')
+local sharedtags = require('extra.sharedtags')
 
 return function(s, modkey)
   return awful.widget.taglist({

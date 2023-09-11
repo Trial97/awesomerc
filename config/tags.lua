@@ -1,10 +1,10 @@
-local awful = require("awful")
-local beautiful = require("beautiful")
-local sharedtags = require("extra.sharedtags")
-local keys = require("config.keys")
+local awful = require('awful')
+local beautiful = require('beautiful')
+local sharedtags = require('extra.sharedtags')
+local keys = require('config.keys')
 
 local modkey = keys.modkey
-local tagnames = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }
+local tagnames = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '10' }
 
 local function prepare_tags(tagnames)
   local tags = {}
@@ -20,7 +20,7 @@ local function prepare_tags(tagnames)
 end
 local tags = prepare_tags(tagnames)
 
-tag.connect_signal("request::default_layouts", function()
+tag.connect_signal('request::default_layouts', function()
   awful.layout.append_default_layouts({
     awful.layout.suit.floating,
     awful.layout.suit.max,
@@ -42,7 +42,7 @@ end)
 
 local update_gap_and_shape = function(t)
   -- Get current tag layout
-  local current_layout = awful.tag.getproperty(t, "layout")
+  local current_layout = awful.tag.getproperty(t, 'layout')
   -- If the current layout is awful.layout.suit.max
   if current_layout == awful.layout.suit.max then
     -- Set clients gap to 0 and shape to rectangle if maximized
@@ -67,24 +67,24 @@ local update_gap_and_shape = function(t)
 end
 
 -- Change tag's client's shape and gap on change
-tag.connect_signal("property::layout", function(t)
+tag.connect_signal('property::layout', function(t)
   update_gap_and_shape(t)
 end)
 
 -- Change tag's client's shape and gap on move to tag
-tag.connect_signal("tagged", function(t)
+tag.connect_signal('tagged', function(t)
   update_gap_and_shape(t)
 end)
 
 -- Focus on urgent clients
-awful.tag.attached_connect_signal(nil, "property::selected", function()
+awful.tag.attached_connect_signal(nil, 'property::selected', function()
   for c in
     awful.client.iterate(function(c)
       return awful.rules.match(c, { urgent = true })
     end)
   do
     if c.first_tag == mouse.screen.selected_tag then
-      c:emit_signal("request::activate")
+      c:emit_signal('request::activate')
       c:raise()
     end
   end
@@ -125,43 +125,43 @@ end
 -- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, 9 do
   awful.keyboard.append_global_keybindings({
-    group = "tag",
+    group = 'tag',
     -- View tag only.
-    awful.key({ modkey }, "#" .. i + 9, function()
+    awful.key({ modkey }, '#' .. i + 9, function()
       local screen = awful.screen.focused()
       local tag = tags[i]
       if tag then
         sharedtags.viewonly(tag, screen)
         update_tags()
       end
-    end, { description = "view tag #" .. i }),
+    end, { description = 'view tag #' .. i }),
     -- Toggle tag display.
-    awful.key({ modkey, "Control" }, "#" .. i + 9, function()
+    awful.key({ modkey, 'Control' }, '#' .. i + 9, function()
       local screen = awful.screen.focused()
       local tag = tags[i]
       if tag then
         sharedtags.viewtoggle(tag, screen)
         update_tags()
       end
-    end, { description = "toggle tag #" .. i }),
+    end, { description = 'toggle tag #' .. i }),
     -- Move client to tag.
-    awful.key({ modkey, "Shift" }, "#" .. i + 9, function()
+    awful.key({ modkey, 'Shift' }, '#' .. i + 9, function()
       if client.focus then
         local tag = tags[i]
         if tag then
           client.focus:move_to_tag(tag)
         end
       end
-    end, { description = "move focused client to tag #" .. i }),
+    end, { description = 'move focused client to tag #' .. i }),
     -- Toggle tag on focused client.
-    awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9, function()
+    awful.key({ modkey, 'Control', 'Shift' }, '#' .. i + 9, function()
       if client.focus then
         local tag = tags[i]
         if tag then
           client.focus:toggle_tag(tag)
         end
       end
-    end, { description = "toggle focused client on tag #" .. i }),
+    end, { description = 'toggle focused client on tag #' .. i }),
   })
 end
 

@@ -1,6 +1,6 @@
-local wibox = require("wibox")
-local awful = require("awful")
-local naughty = require("naughty")
+local wibox = require('wibox')
+local awful = require('awful')
+local naughty = require('naughty')
 
 local function find_widget_in_wibox(wb, widget)
   local function find_widget_in_hierarchy(h, widget)

@@ -1,14 +1,14 @@
-local wibox = require("wibox")
-local awful = require("awful")
-local gears = require("gears")
-local naughty = require("naughty")
-local beautiful = require("beautiful")
+local wibox = require('wibox')
+local awful = require('awful')
+local gears = require('gears')
+local naughty = require('naughty')
+local beautiful = require('beautiful')
 
 local dpi = beautiful.xresources.apply_dpi
-local widget_icon_dir = beautiful.get().icons .. "widgets/notif-center/"
+local widget_icon_dir = beautiful.get().icons .. 'widgets/notif-center/'
 
-local empty_notifbox = require("widgets.notif-center.build-notifbox.empty-notifbox")
-local notifbox_scroller = require("widgets.notif-center.build-notifbox.notifbox-scroller")
+local empty_notifbox = require('widgets.notif-center.build-notifbox.empty-notifbox')
+local notifbox_scroller = require('widgets.notif-center.build-notifbox.notifbox-scroller')
 
 local notif_core = {}
 
@@ -29,7 +29,7 @@ notif_core.reset_notifbox_layout = function()
 end
 
 local function notifbox_add(n, notif_icon, notifbox_color)
-  local notifbox_box = require("widgets.notif-center.build-notifbox.notifbox-builder")
+  local notifbox_box = require('widgets.notif-center.build-notifbox.notifbox-builder')
   if #notif_core.notifbox_layout.children == 1 and notif_core.remove_notifbox_empty then
     notif_core.notifbox_layout:reset(notif_core.notifbox_layout)
     notif_core.remove_notifbox_empty = false
@@ -39,22 +39,22 @@ local function notifbox_add(n, notif_icon, notifbox_color)
 end
 
 local function notifbox_add_expired(n, notif_icon, notifbox_color)
-  n:connect_signal("destroyed", function(self, reason, keep_visble)
+  n:connect_signal('destroyed', function(self, reason, keep_visble)
     if reason == 1 then
       notifbox_add(n, notif_icon, notifbox_color)
     end
   end)
 end
 
-naughty.connect_signal("request::display", function(n)
+naughty.connect_signal('request::display', function(n)
   local notifbox_color = beautiful.transparent
-  if n.urgency == "critical" then
-    notifbox_color = n.bg .. "66"
+  if n.urgency == 'critical' then
+    notifbox_color = n.bg .. '66'
   end
 
   local notif_icon = n.icon or n.app_icon
   if not notif_icon then
-    notif_icon = widget_icon_dir .. "new-notif.svg"
+    notif_icon = widget_icon_dir .. 'new-notif.svg'
   end
 
   notifbox_add_expired(n, notif_icon, notifbox_color)

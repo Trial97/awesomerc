@@ -1,11 +1,11 @@
-local wibox = require("wibox")
-local beautiful = require("beautiful")
-local naughty = require("naughty")
-local gears = require("gears")
-local click_container = require("widgets.clickable-container")
+local wibox = require('wibox')
+local beautiful = require('beautiful')
+local naughty = require('naughty')
+local gears = require('gears')
+local click_container = require('widgets.clickable-container')
 
 local dpi = beautiful.xresources.apply_dpi
-local widget_icon_dir = beautiful.get().icons .. "widgets/notif-center/"
+local widget_icon_dir = beautiful.get().icons .. 'widgets/notif-center/'
 
 local ui_noti_builder = {}
 
@@ -13,7 +13,7 @@ local ui_noti_builder = {}
 ui_noti_builder.notifbox_icon = function(ico_image)
   local noti_icon = wibox.widget({
     {
-      id = "icon",
+      id = 'icon',
       resize = true,
       forced_height = dpi(25),
       forced_width = dpi(25),
@@ -29,9 +29,9 @@ end
 ui_noti_builder.notifbox_title = function(title)
   return wibox.widget({
     markup = title,
-    font = "Inter Bold 12",
-    align = "left",
-    valign = "center",
+    font = 'Inter Bold 12',
+    align = 'left',
+    valign = 'center',
     widget = wibox.widget.textbox,
   })
 end
@@ -40,9 +40,9 @@ end
 ui_noti_builder.notifbox_message = function(msg)
   return wibox.widget({
     markup = msg,
-    font = "Inter Regular 11",
-    align = "left",
-    valign = "center",
+    font = 'Inter Regular 11',
+    align = 'left',
+    valign = 'center',
     widget = wibox.widget.textbox,
   })
 end
@@ -51,9 +51,9 @@ end
 ui_noti_builder.notifbox_appname = function(app)
   return wibox.widget({
     markup = app,
-    font = "Inter Bold 12",
-    align = "left",
-    valign = "center",
+    font = 'Inter Bold 12',
+    align = 'left',
+    valign = 'center',
     widget = wibox.widget.textbox,
   })
 end
@@ -71,8 +71,8 @@ ui_noti_builder.notifbox_actions = function(n)
         {
           {
             {
-              id = "text_role",
-              font = "Inter Regular 10",
+              id = 'text_role',
+              font = 'Inter Regular 10',
               widget = wibox.widget.textbox,
             },
             widget = wibox.container.place,
@@ -96,8 +96,8 @@ end
 ui_noti_builder.notifbox_dismiss = function()
   local dismiss_imagebox = wibox.widget({
     {
-      id = "dismiss_icon",
-      image = widget_icon_dir .. "delete.svg",
+      id = 'dismiss_icon',
+      image = widget_icon_dir .. 'delete.svg',
       resize = true,
       forced_height = dpi(5),
       widget = wibox.widget.imagebox,

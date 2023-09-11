@@ -22,3 +22,5 @@ align_if_branch = false
 align_continuous_similar_call_args = true
 
 align_continuous_inline_comment = true
+
+quote_type = single

@@ -1,26 +1,26 @@
-local awful = require("awful")
-local beautiful = require("beautiful")
-local toggle = require("widgets.toggle")
+local awful = require('awful')
+local beautiful = require('beautiful')
+local toggle = require('widgets.toggle')
 
-local widget_icon_dir = beautiful.get().icons .. "widgets/blue-light/"
+local widget_icon_dir = beautiful.get().icons .. 'widgets/blue-light/'
 
 local state = false
-local offIcon = widget_icon_dir .. "blue-light-off.svg"
-local onIcon = widget_icon_dir .. "blue-light.svg"
+local offIcon = widget_icon_dir .. 'blue-light-off.svg'
+local onIcon = widget_icon_dir .. 'blue-light.svg'
 
-local widget = toggle("Blue Light", offIcon, function()
-  awesome.emit_signal("widgets::blue_light", false)
+local widget = toggle('Blue Light', offIcon, function()
+  awesome.emit_signal('widgets::blue_light', false)
 end)
 
 local function update_widget()
   if state then
-    widget:updateButton("On", beautiful.accent, onIcon)
+    widget:updateButton('On', beautiful.accent, onIcon)
   else
-    widget:updateButton("Off", beautiful.groups_bg, offIcon)
+    widget:updateButton('Off', beautiful.groups_bg, offIcon)
   end
 end
 
-awesome.connect_signal("widgets::blue_light", function()
+awesome.connect_signal('widgets::blue_light', function()
   awful.spawn.easy_async_with_shell(
     [[
         if [ ! -z $(pgrep redshift) ];
@@ -32,7 +32,7 @@ awesome.connect_signal("widgets::blue_light", function()
             echo 'ON'
         fi]],
     function(stdout)
-      state = stdout:match("ON")
+      state = stdout:match('ON')
       update_widget()
     end
   )

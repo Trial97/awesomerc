@@ -1,4 +1,4 @@
-local awful = require("awful")
+local awful = require('awful')
 
 return function(widget)
   widget:buttons({

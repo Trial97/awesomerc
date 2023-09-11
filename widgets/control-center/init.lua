@@ -1,7 +1,7 @@
-local awful = require("awful")
-local wibox = require("wibox")
-local gears = require("gears")
-local beautiful = require("beautiful")
+local awful = require('awful')
+local wibox = require('wibox')
+local gears = require('gears')
+local beautiful = require('beautiful')
 
 local dpi = beautiful.xresources.apply_dpi
 
@@ -10,7 +10,7 @@ local function _format_item(widget, forced_height)
     {
       {
         layout = wibox.layout.align.vertical,
-        expand = "none",
+        expand = 'none',
         nil,
         widget,
         nil,
@@ -35,7 +35,7 @@ local function format_item_no_fix_height(widget)
 end
 
 local vertical_separator = wibox.widget({
-  orientation = "vertical",
+  orientation = 'vertical',
   forced_height = dpi(1),
   forced_width = dpi(1),
   span_ratio = 0.55,
@@ -46,12 +46,12 @@ local control_center_row_one = wibox.widget({
   layout = wibox.layout.align.horizontal,
   forced_height = dpi(48),
   nil,
-  format_item(require("widgets.user-profile")),
+  format_item(require('widgets.user-profile')),
   {
     format_item({
       layout = wibox.layout.fixed.horizontal,
       spacing = dpi(10),
-      require("widgets.end-session")(),
+      require('widgets.end-session')(),
     }),
     left = dpi(10),
     widget = wibox.container.margin,
@@ -64,8 +64,8 @@ local main_control_row_two = wibox.widget({
   format_item_no_fix_height({
     layout = wibox.layout.fixed.vertical,
     spacing = dpi(5),
-    require("evil.airplane-mode"),
-    require("widgets.blue-light"),
+    require('evil.airplane-mode'),
+    require('widgets.blue-light'),
     nil,
   }),
   {
@@ -73,16 +73,16 @@ local main_control_row_two = wibox.widget({
     spacing = dpi(10),
     format_item_no_fix_height({
       layout = wibox.layout.align.vertical,
-      expand = "none",
+      expand = 'none',
       nil,
-      require("widgets.dont-disturb"),
+      require('widgets.dont-disturb'),
       nil,
     }),
     format_item_no_fix_height({
       layout = wibox.layout.align.vertical,
-      expand = "none",
+      expand = 'none',
       nil,
-      require("widgets.blur-toggle"),
+      require('widgets.blur-toggle'),
       nil,
     }),
   },
@@ -92,22 +92,22 @@ local main_control_row_sliders = wibox.widget({
   layout = wibox.layout.fixed.vertical,
   spacing = dpi(10),
   format_item({
-    require("widgets.blur-slider"),
+    require('widgets.blur-slider'),
     margins = dpi(10),
     widget = wibox.container.margin,
   }),
   format_item({
-    require("widgets.brightness-slider"),
+    require('widgets.brightness-slider'),
     margins = dpi(10),
     widget = wibox.container.margin,
   }),
   format_item({
-    require("widgets.volume-slider"),
+    require('widgets.volume-slider'),
     margins = dpi(10),
     widget = wibox.container.margin,
   }),
   format_item({
-    require("widgets.mic-slider"),
+    require('widgets.mic-slider'),
     margins = dpi(10),
     widget = wibox.container.margin,
   }),
@@ -116,13 +116,13 @@ local main_control_row_sliders = wibox.widget({
 local main_control_music_box = wibox.widget({
   layout = wibox.layout.fixed.vertical,
   format_item({
-    require("evil.playerctl"),
+    require('evil.playerctl'),
     margins = dpi(10),
     widget = wibox.container.margin,
   }),
 })
 
-awesome.connect_signal("widgets::control_center:toggle", function(open)
+awesome.connect_signal('widgets::control_center:toggle', function(open)
   local focused = awful.screen.focused()
   for s in screen do
     if s.control_center == nil then
@@ -148,7 +148,7 @@ return function(s)
           spacing = dpi(10),
           control_center_row_one,
           {
-            id = "main_control",
+            id = 'main_control',
             visible = true,
             layout = wibox.layout.fixed.vertical,
             spacing = dpi(10),
@@ -160,7 +160,7 @@ return function(s)
         margins = dpi(16),
         widget = wibox.container.margin,
       },
-      id = "control_center",
+      id = 'control_center',
       bg = beautiful.background,
       shape = function(cr, w, h)
         gears.shape.rounded_rect(cr, w, h, beautiful.groups_radius)
@@ -168,7 +168,7 @@ return function(s)
       widget = wibox.container.background,
     },
     screen = s,
-    type = "dock",
+    type = 'dock',
     visible = false,
     ontop = true,
     width = panel_width,
@@ -194,7 +194,7 @@ return function(s)
     ontop = true,
     screen = s,
     bg = beautiful.transparent,
-    type = "utility",
+    type = 'utility',
     x = s.geometry.x,
     y = s.geometry.y,
     width = s.geometry.width,
@@ -212,15 +212,15 @@ return function(s)
     self.backdrop.visible = self.opened
     self.visible = self.opened
     if self.opened then
-      self:emit_signal("opened")
+      self:emit_signal('opened')
     else
-      self:emit_signal("closed")
+      self:emit_signal('closed')
     end
   end
 
   panel.backdrop:buttons({
     awful.button({}, 1, nil, function()
-      awesome.emit_signal("widgets::control_center:toggle")
+      awesome.emit_signal('widgets::control_center:toggle')
     end),
   })
   return panel
