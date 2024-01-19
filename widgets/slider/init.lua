@@ -124,8 +124,10 @@ return function(text, icon, update_value)
   })
   local changed_outside = false
   function widget:set_value(value)
-    changed_outside = true
-    slider:set_value(value)
+    if value~=nil then
+      changed_outside = true
+      slider:set_value(value)
+    end
   end
 
   slider:connect_signal('property::value', function()

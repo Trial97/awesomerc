@@ -30,3 +30,9 @@ Other great inspirations:
 - https://github.com/atsepkov/awesome-awesome-wm
 - https://github.com/atsepkov/awesome-zen
 - http://epsi-rns.github.io/desktop/2016/07/06/modularized-awesome-structure.html
+
+# Make sure you have a wallpaper folder inside the .config folder
+
+#Extra Resources
+
+- https://wiki.linuxquestions.org/wiki/List_of_keysyms

@@ -25,7 +25,7 @@ function utils.update_user_name(update)
         fullname="$(getent passwd `whoami` | cut -d ':' -f 5 | cut -d ',' -f 1 | tr -d "\n")"
         if [ -z "$fullname" ];
         then
-                printf "$(whoami)@$(hostname)"
+            printf "$(whoami)@$(hostname)"
         else
             printf "$fullname"
         fi

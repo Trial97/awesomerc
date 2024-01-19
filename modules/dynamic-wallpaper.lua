@@ -269,10 +269,14 @@ end
 -- We need some delay.
 -- Hey it's working, so whatever
 local update_wallpaper = function(wall_name)
-  beautiful.wallpaper = wall_config.wall_dir .. wall_name
-  -- set_wallpaper(wall_dir)
-  for s in screen do
-    set_wallpaper(s)
+  if wall_name == nil then return end
+  local filename = wall_config.wall_dir .. wall_name
+  if gfs.file_readable(filename) then
+    beautiful.wallpaper = filename
+    -- set_wallpaper(wall_dir)
+    for s in screen do
+        set_wallpaper(s)
+    end
   end
 end
 

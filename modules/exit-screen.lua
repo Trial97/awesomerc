@@ -309,5 +309,6 @@ gears.timer({
   single_shot = true,
   callback = function()
     awesome.emit_signal('module::exit_screen:redraw')
+    awesome.emit_signal('module::center:redraw')
   end,
 })
