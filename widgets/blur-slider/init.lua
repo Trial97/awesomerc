@@ -21,8 +21,10 @@ local function update_slider(first)
         awk 'NR==1 {print $3}' | tr -d ';'"]],
     function(stdout, stderr)
       local strength = stdout:match('%d+')
-      local blur_strength = tonumber(strength) / 20 * 100
-      blur_slider:set_value(tonumber(blur_strength))
+      if strength~=nil then
+        local blur_strength = tonumber(strength) / 20 * 100
+        blur_slider:set_value(tonumber(blur_strength))
+      end
       start_up = false
     end
   )

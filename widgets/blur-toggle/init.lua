@@ -14,17 +14,18 @@ local onIcon = icons.effects
 
 local conf_dir = gfs.get_configuration_dir() 
 
+local function createPicomCfg()
+    if not gfs.file_readable(config) then
+        awful.spawn.with_shell("mkdir -p $(dirname "..config..");cp "..conf_dir.."widgets/blur-toggle/picom.conf "..config)
+    end
+end
+
 local function toggle_blur()
+  createPicomCfg()
   local script = [[bash -c "
     # Check picom if it's not running then start it
-    FILE="]]..config..[["
-    if [ ! -f "$FILE" ]; then
-        DIRNAME = dirname $FILE
-        mkdir -p $DIRNAME
-        cp ]] ..conf_dir..[[widgets/blur-toggle/picom.conf $FILE
-    ;fi
     if [ -z $(pgrep picom) ]; then
-        picom -b --dbus --config $FILE;fi"
+        picom -b --dbus --config ]] .. config .. [[;fi
 ]]
   if state then
     script = script .. [[sed -i -e 's/method = \"none\"/method = \"dual_kawase\"/g' \"]] .. config .. [[\""]]
