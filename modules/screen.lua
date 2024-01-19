@@ -47,6 +47,13 @@ local function update_bars_visibility()
   end
 end
 
+awesome.connect_signal('module::center:redraw', function()
+  for s in screen do
+    s.control_center = controlCenter(s)
+    s.info_center = infoCenter(s)
+  end
+end)
+
 return function(tags)
   awful.screen.connect_for_each_screen(function(s)
     set_tags(s, tags)
