@@ -1,7 +1,7 @@
 return {
   terminal = 'kitty',
   web_browser = 'firefox',
-  text_editor = 'vim',
+  text_editor = 'nvim',
   ide = 'code',
   git = 'smerge',
   file_manager = 'thunar',

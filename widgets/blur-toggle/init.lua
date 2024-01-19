@@ -14,7 +14,7 @@ local function toggle_blur()
   local script = [[bash -c "
     # Check picom if it's not running then start it
     if [ -z $(pgrep picom) ]; then
-        picom -b --dbus --config ]] .. config .. [[;fi
+        picom -b --dbus --config ]] .. config .. [[;fi"
 ]]
   if state then
     script = script .. [[sed -i -e 's/method = \"none\"/method = \"dual_kawase\"/g' \"]] .. config .. [[\""]]
