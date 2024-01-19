@@ -1,7 +1,9 @@
 local awful = require('awful')
 local beautiful = require('beautiful')
+local gears = require('gears')
 local icons = require('themes.icons')
 local toggle = require('widgets.toggle')
+local gfs = gears.filesystem
 
 local widget_icon_dir = beautiful.get().icons .. 'widgets/blur/'
 local config = '$HOME/.config/picom/picom.conf'
@@ -10,11 +12,19 @@ local state = false
 local offIcon = widget_icon_dir .. 'effects-off.svg'
 local onIcon = icons.effects
 
+local conf_dir = gfs.get_configuration_dir() 
+
 local function toggle_blur()
   local script = [[bash -c "
     # Check picom if it's not running then start it
+    FILE="]]..config..[["
+    if [ ! -f "$FILE" ]; then
+        DIRNAME = dirname $FILE
+        mkdir -p $DIRNAME
+        cp ]] ..conf_dir..[[widgets/blur-toggle/picom.conf $FILE
+    ;fi
     if [ -z $(pgrep picom) ]; then
-        picom -b --dbus --config ]] .. config .. [[;fi"
+        picom -b --dbus --config $FILE;fi"
 ]]
   if state then
     script = script .. [[sed -i -e 's/method = \"none\"/method = \"dual_kawase\"/g' \"]] .. config .. [[\""]]
