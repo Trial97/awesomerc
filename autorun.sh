@@ -16,6 +16,8 @@ eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg)
 run xrdb $XDG_CONFIG_HOME/X11/xresources
 run nm-applet
 run blueman-applet
+run pamac-tray
+run msm_notifier
 
 ## run (only once) processes which spawn with different name
 # if (command -v gnome-keyring-daemon && ! pgrep gnome-keyring-d); then
