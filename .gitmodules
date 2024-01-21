@@ -1,18 +1,18 @@
 [submodule "extra/sharedtags"]
 path = extra/sharedtags
-url = git@github.com:Trial97/awesome-sharedtags.git
+url = https://github.com/Trial97/awesome-sharedtags.git
 [submodule "extra/bling"]
 path = extra/bling
-url = git@github.com:Trial97/bling.git
+url = https://github.com/Trial97/bling.git
 [submodule "extra/nice"]
 path = extra/nice
-url = git@github.com:Trial97/awesome-wm-nice.git
+url = https://github.com/Trial97/awesome-wm-nice.git
 [submodule "extra/freedesktop"]
 path = extra/freedesktop
 url = https://github.com/lcpz/awesome-freedesktop.git
 [submodule "extra/lain"]
 path = extra/lain
-url = git@github.com:Trial97/lain.git
+url = https://github.com/Trial97/lain.git
 [submodule "extra/awesome-revelation"]
 path = extra/awesome-revelation
-url = git@github.com:Trial97/awesome-revelation.git
+url = https://github.com/Trial97/awesome-revelation.git
