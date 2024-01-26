@@ -2,7 +2,7 @@ return {
   terminal = 'kitty',
   web_browser = 'firefox',
   text_editor = 'nvim',
-  ide = 'codium',
+  ide = 'code',
   git = 'smerge',
   file_manager = 'thunar',
   multimedia = 'vlc',
