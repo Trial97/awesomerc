@@ -20,3 +20,4 @@ run picom -b --dbus --config $XDG_CONFIG_HOME/picom/picom.conf
 
 sleep 5
 run hexchat --minimize=2
+run qbittorrent
