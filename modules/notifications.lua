@@ -37,10 +37,14 @@ naughty.config.icon_formats = { 'svg', 'png', 'jpg', 'gif' }
 naughty.config.notify_callback = function(args)
   if args.app_name == 'pa-applet' then
     local volume = args.freedesktop_hints.value
-    if string.find(args.app_icon, 'muted') then
+    local app_icon =  args.app_icon
+    if not app_icon then 
+        app_icon = args.image
+    end
+    if app_icon and string.find(app_icon, 'muted') then
       volume = 0
     end
-    awesome.emit_signal('modules::volume_osd', volume, args.app_icon)
+    awesome.emit_signal('modules::volume_osd', volume, app_icon)
   end
   return args
 end
